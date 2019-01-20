@@ -1,0 +1,2 @@
+XML=\LCMS\Core\LXML \LCMS\Core\LXML \LCMS\Core\ILXML
+TagStripper=\LCMS\Core\TagStripper \LCMS\Core\TagStripper \LCMS\Core\ITagStripper

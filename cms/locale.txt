@@ -1,0 +1,4 @@
+notmoved[en]: Not moved
+notmoved[ru]: Не перемещено
+nothingtoupload[en]: Nothing to upload
+nothingtoupload[ru]: Нечего загружать

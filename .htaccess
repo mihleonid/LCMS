@@ -1,0 +1,22 @@
+#######################
+#Файл распространяется#
+#не только на итоговый#
+#сайт, но и на CMS    #
+#######################
+#comment
+<IfModule mod_rewrite.c>
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(.*)$ [NC]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ http://www.%1/$1 [R=301,L]
+</IfModule>
+<Files *.lbgz>
+deny from all
+</Files>
+#RewriteEngine On
+#RewriteCond %{HTTP_HOST} !^www\.(.*) [NC]
+#RewriteRule ^(.*)$ http://www.%1/$1 [R=301,L]
+Options -Indexes
+ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php

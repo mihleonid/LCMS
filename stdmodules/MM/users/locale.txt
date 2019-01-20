@@ -1,0 +1,16 @@
+useralreadyexists[en]: User already exists
+useralreadyexists[ru]: Пользователь уже существует
+statusnotexists[en]: Status not exists
+statusnotexists[ru]: Статуса не существует
+usernotexists[en]: User not exists
+usernotexists[ru]: Пользователя не существует
+mypass[en]: Attention!<br><span style="color: #99ffaa;">You have changed your password. New is: <code style="font-size: larger;">
+mypass[ru]: Внимание!<br><span style="color: #99ffaa;">Вы изменили свой пароль. Новый: <code style="font-size: larger;">
+passwordicorrect[en]: Password is icorrect
+passwordicorrect[ru]: Пароль неверен
+lastglobal[en]: You can not delete thelast administrator with status <code>globaladmin</code>!
+lastglobal[ru]: Вы не можете удалить последнего администратора статуса <code>globaladmin</code>!
+impossibledownstatmin[en]: Impossible! Already minimal status
+impossibledownstatmin[ru]: Невозможно! Уже минимальный статус
+impossibledownstatmax[en]: Impossible! Already maximal status
+impossibledownstatmax[ru]: Невозможно! Уже максимальный статус

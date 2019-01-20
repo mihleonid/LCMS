@@ -1,0 +1,12 @@
+Version: 1.0
+Sysname: users
+Name[ru]: Управление пользователями
+Name[en]: Users management
+Description[ru]: Этот модуль позволяет управлять пользователями.
+Description[en]: This module provides access for users management
+Author[en]: Mikhaylov Leonid
+Author[ru]: Михайлов Леонид
+Pages: 1
+Dependencies: core 3.0, |mainmodules| 3.0
+Actions: add
+Premissions: add

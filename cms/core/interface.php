@@ -18,6 +18,9 @@ namespace LCMS\Core{
 		public function zip(){
 			return $this;
 		}
+		public function __toString(){
+			return $this->contents;
+		}
 		public function deleteComments(){
 			$this->contents=str_replace("<!---->", "", $this->contents);
 			$this->contents=preg_replace("@<!--[^!].*?-->@", "", $this->contents);
@@ -57,6 +60,16 @@ namespace LCMS\Core{
 			}
 			$this->allowed=$tags;
 		}
+		public static function s($text, $tags=array(), $php=true){
+			$r=new static($php, $tags);
+			return($r->strip($text));
+		}
+		abstract public function strip($text);
+	}
+	abstract class ILog{
+		abstract public static function put($msg);
+		abstract public static function logging();
+		abstract public static function llog($path, $msg);
 	}
 }
 ?>

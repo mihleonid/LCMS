@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	use \LCMS\MM\Logger\Log;
+	use \LCMS\MM\Log\Log;
 	class Mutex{
 		public static function set($module, $name){
 			$path=Data::path($module, $name, "mut");

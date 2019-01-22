@@ -98,14 +98,8 @@ namespace LCMS\Core{
 			}
 			return array(new static($matches[1], false));
 		}
-		public function has($tag){
-			$tag=preg_quote($tag, "@");
-			return(preg_match("@<$tag ?/>@u", $this->contents)!=0);
-		}
-		public function hasopen($tag){
-			$tag=preg_quote($tag, "@");
-			return(preg_match("@<$tag.*?>@u", $this->contents)!=0);
-		}
+		public function has($tag){return(preg_match("@<".preg_quote($tag, "@")." ?/>@u", $this->contents)!=0);}
+		public function hasopen($tag){return(preg_match("@<".preg_quote($tag, "@").".*?>@u", $this->contents)!=0);}
 		public function node($path){
 			$path=explode(".", $path);
 			$current=$this;
@@ -118,12 +112,8 @@ namespace LCMS\Core{
 				$current=$current[0];
 			}
 		}
-		public function zip(){
-			$this->azip();
-			$this->azip();
-			return $this;
-		}
-		private function azip(){
+		public function zip(){return($this->azip()->azip());}
+		protected function azip(){
 			$a=strlen($this->contents);
 			$newstr="";
 			$prelast="";
@@ -190,6 +180,7 @@ namespace LCMS\Core{
 				$last=$current;
 			}
 			$this->contents=trim($newstr.$prelast.$last);
+			return $this;
 		}
 	}
 }

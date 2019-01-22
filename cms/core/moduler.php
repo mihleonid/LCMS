@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	use \LCMS\MM\Logger\Log;
+	use \LCMS\MM\Log\Log;
 	class Moduler{
 		const SIMPLE_LEVEL=0;
 		const STANDART_LEVEL=1;
@@ -43,10 +43,10 @@ namespace LCMS\Core{
 		}
 		public static function log($module, $message){
 			if(Log::logging()){
-				Log::log(Path::concat(static::path($module), "main.log"), $message);#todo
+				Log::llog(Path::concat(static::path($module), "main.log"), $message);#todo
 			}
 		}
-		public static function 
+		public static function#todo install 
 	}
 	class Handler{
 		private static $base=array();//format group=>array(...func=>module...)

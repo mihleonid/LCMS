@@ -1,19 +1,17 @@
 <?php
-namespace LCMS\Core\{
-	class HTag{
+namespace LCMS\Core{
+	class AllowedTags{
 		public static function getAllowedTags($can=null){
-			if($can==null){
-				$can= \LCMS\Core\Users\Stats::can("alltag");
-			}
+			#todo auto can
 			if($can){
 				return Loc::get("html");
 			}else{
 				return Loc::get("tag");
 			}
 		}
-		#region HTML
 		public static function add($tag){
-			$arr=Loc::get("html");
+			$tag=strip((string)$tag);
+			$arr=Loc::get("html", array());
 			$arr[$tag]=array();
 			return Loc::set("html", $arr);
 		}
@@ -24,9 +22,9 @@ namespace LCMS\Core\{
 			foreach($str as $tag){
 				$o=explode('/', $tag);
 				if(isset($o[1])){
-					HTag::deleteAttr($o[0], $o[1]);
+					static::deleteAttr($o[0], $o[1]);
 				}else{
-					HTag::deleteHTag($tag);
+					static::deleteHTag($tag);
 				}
 			}
 			return new Result();

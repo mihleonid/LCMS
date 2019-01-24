@@ -67,9 +67,19 @@ namespace LCMS\Core{
 		abstract public function strip($text);
 	}
 	abstract class ILog{
-		abstract public static function put($msg);
+		public static function put($msg){
+			return static::llog(Path::cms("main.log"), $msg);
+		}
 		abstract public static function logging();
 		abstract public static function llog($path, $msg);
+	}
+	abstract class IAllowedTags{
+		
+	}
+	abstract class IPageLog extends ILog{
+		public static function logging(){
+			return true;
+		}
 	}
 }
 ?>

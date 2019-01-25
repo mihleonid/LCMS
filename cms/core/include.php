@@ -1,5 +1,6 @@
 <?php
 include(__DIR__ ."/lib/include.php");
+include(__DIR__ ."/softlib/include.php");
 include(__DIR__ ."/pool.php");
 include(__DIR__ ."/path.php");
 include(__DIR__ ."/data.php");

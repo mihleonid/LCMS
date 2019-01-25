@@ -1,6 +1,5 @@
 <?php
 namespace LCMS\Core{
-	function nop(){}
 	function b64($text){
 		$text=base64_encode($text);
 		$text=strtr($text, "+/=", "_-~");
@@ -28,15 +27,6 @@ namespace LCMS\Core{
 	}
 	function bitmask($mask, $bitint){
 		return(($mask&$bitint)==$bitint);
-	}
-	function rnd($a=null, $b=null){
-		if($a===null){
-			$a=0;
-		}
-		if($b===null){
-			$b=mt_getrandmax();
-		}
-		return mt_rand($a, $b);
 	}
 }
 ?>

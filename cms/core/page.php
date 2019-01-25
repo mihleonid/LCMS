@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	class AllowedTags{
+	class AllowedTags extends IAllowedTags{
 		public static function getAllowedTags($can=null){
 			#todo auto can
 			if($can){
@@ -9,103 +9,123 @@ namespace LCMS\Core{
 				return Loc::get("tag");
 			}
 		}
-		public static function add($tag){
-			$tag=strip((string)$tag);
+		public static function addHTag($tag){
+			$tag=strip($tag);
+			if($tag=""){
+				return new Result("---emptystr---");
+			}
 			$arr=Loc::get("html", array());
 			$arr[$tag]=array();
+			return Loc::set("html", $arr);
+		}
+		public static function addHAttr($tag, $attr){
+			$arr=Loc::get("html");
+			$tag=strip($tag);
+			$attr=strip($attr);
+			if(($tag="")or($attr="")){
+				return new Result("---emptystr---");
+			}
+			if(!isset($arr[$tag])){
+				$arr[$tag]=array($attr=>true);
+			}
+			$arr[$tag][$attr]=true;
 			return Loc::set("html", $arr);
 		}
 		public static function deleteH($str){
 			if(!is_array($str)){
 				$str=array($str);
 			}
+			$r=new Result();
 			foreach($str as $tag){
-				$o=explode('/', $tag);
+				$o=explode('/', (string)$tag);
 				if(isset($o[1])){
-					static::deleteAttr($o[0], $o[1]);
+					$r->add(static::deleteHAttr($o[0], $o[1]));
 				}else{
-					static::deleteHTag($tag);
+					$r->add(static::deleteHTag($tag));
 				}
 			}
-			return new Result();
+			return($r);
 		}
-		public static function deleteHTag($tag){
+		protected static function deleteHTag($tag){
 			$arr=Loc::get("html");
 			if(isset($arr[$tag])){
 				unset($arr[$tag]);
 				return Loc::set("html", $arr);
 			}
-			return new Result("Тега несуществует");
+			return new Result("---notag---");
 		}
-		public static function addAttr($tag, $attr){
-			$arr=Loc::get("html");
-			$arr[$tag][$attr]=true;
-			return Loc::set("html", $arr);
-		}
-		public static function deleteAttr($tag, $attr){
+		protected static function deleteHAttr($tag, $attr){
 			$arr=Loc::get("html");
 			if(isset($arr[$tag][$attr])){
 				unset($arr[$tag][$attr]);
 				return Loc::set("html", $arr);
 			}
-			return new Result("Атрибута несуществует");
-		}
-		#endregion
-		#region EveryOneAble
-		public static function deleteTag($tag){
-			$arr=Loc::get("tag");
-			if(!is_array($tag)){
-				$tag=array($tag);
-			}
-			foreach($tag as $tage){
-				$tage=trim($tage);
-				if(isset($arr[$tage])){
-					unset($arr[$tage]);
-				}
-			}
-			return Loc::set("tag", $arr);
+			return new Result("---noattr---");
 		}
 		public static function addTag($tag){
-			$tag=strtolower(trim($tag));
-			$tag=preg_replace("@[^a-z]@", "", $tag);
-			$arr=Loc::get("tag");
+			$tag=strip($tag);
+			if($tag=""){
+				return new Result("---emptystr---");
+			}
+			$arr=Loc::get("html", array());
 			$arr[$tag]=array();
+			return Loc::set("html", $arr);
+		}
+		public static function addAttr($tag, $attr){
+			$arr=Loc::get("tag");
+			$tag=strip($tag);
+			$attr=strip($attr);
+			if(($tag="")or($attr="")){
+				return new Result("---emptystr---");
+			}
+			if(!isset($arr[$tag])){
+				$arr[$tag]=array($attr=>true);
+			}
+			$arr[$tag][$attr]=true;
 			return Loc::set("tag", $arr);
 		}
-		public static function setAllowedTags($tagst){
-			if(!isset($tagst)){
-				$tagst=array();
+		public static function delete($str){
+			if(!is_array($str)){
+				$str=array($str);
 			}
-			if(!is_array($tagst)){
-				return new Result("Не массив");
-			}
-			$tags=array();
-			foreach($tagst as $tag=>$val){
-				if($val=="ON"){
-					$tags[$tag]=array();
+			$r=new Result();
+			foreach($str as $tag){
+				$o=explode('/', (string)$tag);
+				if(isset($o[1])){
+					$r->add(static::deleteAttr($o[0], $o[1]));
 				}else{
-					foreach($val as $a){
-						$tags[$tag][$a]=true;
-					}
+					$r->add(static::deleteTag($tag));
 				}
 			}
-			return Loc::set("tag", $tags);
+			return($r);
 		}
-		#endregion
+		protected static function deleteTag($tag){
+			$arr=Loc::get("tag");
+			if(isset($arr[$tag])){
+				unset($arr[$tag]);
+				return Loc::set("tag", $arr);
+			}
+			return new Result("---notag---");
+		}
+		protected static function deleteAttr($tag, $attr){
+			$arr=Loc::get("tag");
+			if(isset($arr[$tag][$attr])){
+				unset($arr[$tag][$attr]);
+				return Loc::set("tag", $arr);
+			}
+			return new Result("---noattr---");
+		}
 	}
-	class PageLog{
-		const ADD=2;
-		const EDIT=3;
-		const DELETE=4;
+	class PageLog extends IPageLog{
 		public static function put($path, $user, $type, $ok=true){
 			switch($type){
-				case (self::ADD):
+				case (static::ADD):
 					$type='<b style="color: #00aa00">Создание</b>';
 					break;
-				case (self::EDIT):
+				case (static::EDIT):
 					$type='<b style="color: #0000aa">Редактирование</b>';
 					break;
-				case (self::DELETE):
+				case (static::DELETE):
 					$type='<b style="color: #aa0000">Удаление</b>';
 					break;
 				default:
@@ -117,21 +137,14 @@ namespace LCMS\Core{
 			}else{
 				$ok='<span style="color: #aa0000;">Ошибка</span>';
 			}
-			$type="$path|$user|$type|$ok";
-			Logger::llog(Path::cms("page.log"), $type);
-		}
-		public static function clear($do){
-			$log=file("page_log.db");
-			$int=min($do, count($log));
-			$int=count($log)-$int;
-			for($i=0;$i<$int;++$i){
-				unset($log[$i]);
+			if(!User::exists($user)){
+				$user="!Unknown!";
 			}
-			file_put_contents("page_log.db", implode("", $log));
-			return new Result();
+			$type="$path|$user|$type|$ok";
+			Log::llog(Path::cms("page.log"), $type);
 		}
 	}
-	class DB{
+	class PageList extends IPageList{
 		public static function addPageToList($path, $nameinlist, $auf0, $category){
 			$db=unserialize(file_get_contents($_SERVER['DOCUMENT_ROOT']."/cms/pages.db"));
 			$db[$path]=array($nameinlist, $auf0, $category);

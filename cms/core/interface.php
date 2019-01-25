@@ -66,20 +66,52 @@ namespace LCMS\Core{
 		}
 		abstract public function strip($text);
 	}
-	abstract class ILog{
+	abstract class IAllowedTags{
+		abstract public function getAllowedTags($can=null);
+		abstract public function addHTag($tag);
+		abstract public function addHAttr($tag, $attr);
+		abstract public function deleteH($path);
+		abstract public function addTag($tag);
+		abstract public function addAttr($tag, $attr);
+		abstract public function delete($path);
+	}
+	class TLogClear{
+		public static function clear($n){
+			$log=Path::get(static::path());
+			$log=explode("\n", $log);
+			$n=min($n, count($log));
+			$n=count($log)-$int;
+			for($i=0;$i<$n;++$i){
+				unset($log[$i]);
+			}
+			Path::put(static::path(), implode("\n", $log));
+			return new Result();
+		}
+	}
+	abstract class ILog extends TLogClear{
+		public static function path(){
+			return Path::cms("main.log");
+		}
 		public static function put($msg){
-			return static::llog(Path::cms("main.log"), $msg);
+			return static::llog(static::path(), $msg);
 		}
 		abstract public static function logging();
 		abstract public static function llog($path, $msg);
 	}
-	abstract class IAllowedTags{
-		
-	}
-	abstract class IPageLog extends ILog{
+	abstract class IPageLog extends TLogClear{
+		const ADD=2;
+		const EDIT=3;
+		const DELETE=4;
+		public static function path(){
+			return Path::cms("page.log");
+		}
+		abstract public function put($path, $user, $type, $ok=true);
 		public static function logging(){
 			return true;
 		}
+	}
+	abstract class IPageList{
+		
 	}
 }
 ?>

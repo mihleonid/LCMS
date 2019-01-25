@@ -2,3 +2,9 @@ notmoved[en]: Not moved
 notmoved[ru]: Не перемещено
 nothingtoupload[en]: Nothing to upload
 nothingtoupload[ru]: Нечего загружать
+notag[en]: Tag not exists
+notag[ru]: Тега не существует
+noattr[en]: Attribute not exists
+noattr[ru]: Аттрибута не существует
+empystr[en]: Empty string
+empystr[ru]: Пустой аргумент

@@ -1,2 +1,5 @@
+#Module=Current Def Interface[ Simple]
 XML=\LCMS\Core\LXML \LCMS\Core\LXML \LCMS\Core\ILXML
 TagStripper=\LCMS\Core\TagStripper \LCMS\Core\TagStripper \LCMS\Core\ITagStripper
+PageLog=\LCMS\Core\PageLog \LCMS\Core\PageLog \LCMS\Core\IPageLog
+AllowedTags=\LCMS\Core\AllowedTags \LCMS\Core\AllowedTags \LCMS\Core\IAllowedTags

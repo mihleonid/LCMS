@@ -15,8 +15,24 @@ namespace LCMS\Core{
 		public function add($msg){
 			$this->append($msg);
 		}
+		public function put($msg){
+			$this->append($msg);
+		}
+		public function set($msg){
+			$this->append($msg);
+		}
 		public function append($msg){
-			$this->msg.=$msg;
+			if(is_class_of($msg, "\\LCMS\\Core\\Result")){
+				$this->msg.=$msg->get();
+			}else{
+				$this->msg.=$msg;
+			}
+		}
+		public function g(){
+			return(Text::parse($this->msg, Text::PARSE_LOCALE));
+		}
+		public function e(){
+			echo($this->g());
 		}
 	}
 	class Action{
@@ -26,7 +42,6 @@ namespace LCMS\Core{
 				$path=
 			}
 		}
-		private
 		public function e(){}
 		public function i(){}
 	}

@@ -137,18 +137,33 @@ namespace LCMS\Core{
 			}else{
 				$ok='<span style="color: #aa0000;">Ошибка</span>';
 			}
-			if(!User::exists($user)){
-				$user="!Unknown!";
-			}
+			$user=User::realName($user);
 			$type="$path|$user|$type|$ok";
 			Log::llog(Path::cms("page.log"), $type);
 		}
 	}
 	class PageList extends IPageList{
-		public static function addPageToList($path, $nameinlist, $auf0, $category){
-			$db=unserialize(file_get_contents($_SERVER['DOCUMENT_ROOT']."/cms/pages.db"));
-			$db[$path]=array($nameinlist, $auf0, $category);
-			file_put_contents($_SERVER['DOCUMENT_ROOT']."/cms/pages.db", serialize($db));
+		public static function add($path, $name, $category){
+			$path=Path::iabs($path);
+			if(trim(Path::get($path))!=""){
+				$c=static::all();
+				$name=strip($name);
+				#todo add
+			}
+		}
+		public static function delete($path){
+			$path=Path::iabs($path);
+			$c=static::all();
+			if(isset($c[$path])){
+				unset($c[$path]);
+			}
+			static::write($c);
+		}
+		public static function all(){
+			return uncode(static::path(), array());
+		}
+		protected static function write($c){
+			return Path::put(static::path(), code($c));
 		}
 	}
 	class Category{

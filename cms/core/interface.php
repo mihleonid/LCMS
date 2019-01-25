@@ -111,6 +111,31 @@ namespace LCMS\Core{
 		}
 	}
 	abstract class IPageList{
+		public static function path(){
+			return(Path::cms("pages.db"));
+		}
+		abstract public function add($path, $name, $category);
+		abstract public function delete($path);
+		abstract public function all();
+		public function cleanup(){
+			$all=static::all();
+			foreach($all as $path=>$val){
+				if(trim(Path::get($path))==""){
+					static::delete($path);
+				}
+			}
+		}
+	}
+	abstract public class User{
+		abstract public function exists($name);
+		abstract public function can($name, $stat);
+		abstract public function realName($name);
+		abstract public function authName();
+	}
+	abstract public class Status{
+		
+	}
+	abstract public class Permission{
 		
 	}
 }

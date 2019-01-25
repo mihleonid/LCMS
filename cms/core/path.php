@@ -250,6 +250,13 @@ namespace LCMS\Core{
 			}
 			return implode('/', $a);
 		}
+		public static function iabs($path){
+			$path=static::abs($path);
+			if(static::nonregister()){
+				return(strtolower($path));
+			}
+			return $path;
+		}
 		public static function cms($path){return(static::cmsinstall(static::concat("cms", $path)));}
 		public static function site($path){
 			$path=static::abs($path);

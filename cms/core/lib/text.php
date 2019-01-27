@@ -1,7 +1,7 @@
 <?php
 namespace LCMS\Core{
-	function strip($a, $firstletter=true){
-		$a=preg_replace('@[^a-zA-Z_1-90\-\~]@', '', $a);
+	function strip($a, $firstletter=true, $additional=''){
+		$a=preg_replace('@[^a-zA-Z_1-90\-\~'.$additional.']@', '', $a);
 		if($firstletter){
 			while(!firstlettercondition($a[0])){
 				$a=substr($a, 1);

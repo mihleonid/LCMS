@@ -22,7 +22,7 @@ namespace LCMS\Core{
 		if($aa==$bb){
 			return true;
 		}
-		returm is_subclass_of($a, $b);
+		return is_subclass_of($a, $b);
 	}
 }
 ?>

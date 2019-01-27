@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	class Pool{
+	final class Pool{
 		const CRASH="LCMS_CRASH%COMPIELER:RANDOM%";
 		private static $cwd=null;
 		private static $flushback=false;

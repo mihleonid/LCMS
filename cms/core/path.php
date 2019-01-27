@@ -1,7 +1,6 @@
 <?php
 namespace LCMS\Core{
-	use \LCMS\MM\Security\SecurityException;#todo realize
-	class Path{
+	final class Path{
 		const MAX_FILESIZE=1073741824;//1Gb=1024Mb=1048576Kb=1073741824b
 		//private:
 		private static $changes=array();
@@ -272,6 +271,13 @@ namespace LCMS\Core{
 		}
 		public static function recovery($path){return(static::cmsinstall(static::concat("recovery", $path)));}
 		public static function cmsinstall($path){return(static::concat((static::deleteroot(dirname(dirname(dirname( __FILE__ ))))), $path));}
+		public static function sinclude($path){
+			if(static::ufile_exists($path)){
+				return static::inc($path);
+			}
+			return Pool::CRASH;
+		}
+		public static function inc($path){return(include(static::root($path)));}
 		//handler:
 		public static function initialize(){
 			static::$droot=rtrim(str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']), "/");
@@ -302,210 +308,6 @@ namespace LCMS\Core{
 					}
 				}
 			}
-		}
-	}
-	class FileSystemException extends \Exception{
-		public function __construct($message, $code=0, $previous=null){
-			Pool::trouble();
-			parent::__construct($message, $code, $previous);
-		}
-	}
-	class IO{
-		private static function httpget($path, $data=array()){
-			if(!is_array($data)){
-				$data=array();
-			}
-			$data['method']="GET";
-			if(isset($data['content'])){
-				unset($data['content']);
-			}
-			return file_get_contents($path, false, stream_context_create(array('http'=>$data)));
-		}
-		private static function httpput($path, $content, $data=array()){
-			if(!is_array($data)){
-				$data=array();
-			}
-			$data['method']="POST";
-			$data['content']=$content;
-			return file_get_contents($path, false, stream_context_create(array('http'=>$data)));
-		}
-		public static function get($path, $data=array()){
-			if(!is_array($data)){
-				$data=array();
-			}
-			$protocol=strtolower(substr($path, 0, 8));
-			if(($protocol[0]=='h')and($protocol[1]=='t')and($protocol[2]=='t')and($protocol[3]=='p')){
-				if((($protocol[4]=='s')and($protocol[5]==':')and($protocol[6]=='/')and($protocol[7]=='/'))or(($protocol[4]==':')and($protocol[5]=='/')and($protocol[6]=='/'))){
-					return static::httpget($path, $data);
-				}
-			}
-			if(($protocol[0]=='f')and($protocol[1]=='i')and($protocol[2]=='l')and($protocol[3]=='e')and($protocol[4]==':')and($protocol[5]=='/')and($protocol[6]=='/')){
-				return Path::get(substr($path, 7));
-			}
-			if(($protocol[0]=='i')and($protocol[1]=='o')and($protocol[2]==':')and($protocol[3]=='/')and($protocol[4]=='/')){
-				$datan=substr($path, 5);
-				$datan=explode("%%", $datan);
-				$path=$datan[0];
-				$data=array();
-				$tmpcount=count($datan)
-				for($i=1;$i<$tmpcount;++$i){
-					$cur=$datan[$i];
-					$cur=explode('=', $cur);
-					if(!isset($cur[1])){
-						$cur[1]="";
-					}
-					$data[$cur[0]]=$cur[1];
-				}
-				return IO::get($path, $data);
-			}
-			if(($protocol[0]=='d')and($protocol[1]=='a')and($protocol[2]=='t')and($protocol[3]=='a')and($protocol[4]==':')and($protocol[5]=='/')and($protocol[6]=='/')){
-				if(!isset($data['def'])){
-					$data['def']=array();
-				}
-				if(!isset($data['module'])){
-					$data['module']=null;
-				}
-				return Data::get($data['module'], substr($path, 7), $data['def']);
-			}
-			if(($protocol[0]=='l')and($protocol[1]=='o')and($protocol[2]=='c')and($protocol[3]==':')and($protocol[4]=='/')and($protocol[5]=='/')){
-				if(!isset($data['def'])){
-					$data['def']=null;
-				}
-				return Loc::get(substr($path, 6), $data['def']);
-			}
-			if(($protocol[0]=='i')and($protocol[1]=='n')and($protocol[2]=='i')and($protocol[3]==':')and($protocol[4]=='/')and($protocol[5]=='/')){
-				if(isset($data['tmp'])){
-					return ini_get(substr($path, 6));
-				}
-				return INI::get(substr($path, 6));
-			}
-			return Path::get($path);
-		}
-		public static function put($path, $content, $data=array()){
-			if(!is_array($data)){
-				$data=array();
-			}
-			$protocol=strtolower(substr($path, 0, 8));
-			$protocol.="nnnnnnnn";
-			if(($protocol[0]=='h')and($protocol[1]=='t')and($protocol[2]=='t')and($protocol[3]=='p')){
-				if((($protocol[4]=='s')and($protocol[5]==':')and($protocol[6]=='/')and($protocol[7]=='/'))or(($protocol[4]==':')and($protocol[5]=='/')and($protocol[6]=='/'))){
-					return static::httpput($path, $content, $data);
-				}
-			}
-			if(($protocol[0]=='f')and($protocol[1]=='i')and($protocol[2]=='l')and($protocol[3]=='e')and($protocol[4]==':')and($protocol[5]=='/')and($protocol[6]=='/')){
-				return Path::put(substr($path, 7), $content);
-			}
-			if(($protocol[0]=='i')and($protocol[1]=='o')and($protocol[2]==':')and($protocol[3]=='/')and($protocol[4]=='/')){
-				$datan=substr($path, 5);
-				$datan=explode("%%", $datan);
-				$path=$datan[0];
-				$data=array();
-				$tmpcount=count($datan);
-				for($i=1;$i<$tmpcount;++$i){
-					$cur=$datan[$i];
-					$cur=explode('=', $cur);
-					if(!isset($cur[1])){
-						$cur[1]="";
-					}
-					$data[$cur[0]]=$cur[1];
-				}
-				return IO::put($path, $content, $data);
-			}
-			if(($protocol[0]=='d')and($protocol[1]=='a')and($protocol[2]=='t')and($protocol[3]=='a')and($protocol[4]==':')and($protocol[5]=='/')and($protocol[6]=='/')){
-				if(!isset($data['module'])){
-					$data['module']=null;
-				}
-				return Data::put($data['module'], substr($path, 7), $content);
-			}
-			if(($protocol[0]=='l')and($protocol[1]=='o')and($protocol[2]=='c')and($protocol[3]==':')and($protocol[4]=='/')and($protocol[5]=='/')){
-				if(isset($data['tmp'])){
-					return ini_set(substr($path, 6), $content);
-				}
-				return Loc::put(substr($path, 6), $content);
-			}
-			if(($protocol[0]=='i')and($protocol[1]=='n')and($protocol[2]=='i')and($protocol[3]==':')and($protocol[4]=='/')and($protocol[5]=='/')){
-				return INI::put(substr($path, 6), $content);
-			}
-			return Path::put($path, $content);
-		}
-	}
-	class Transfer{
-		public static function download($file, $data=array()){
-			$content=IO::get($file, $data);
-			header('Content-Description: CMS File Transfer');
-			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename="'.basename($file).'"');
-			header('Expires: Sat, 26 Jul 1997 15:00:00 GMT');
-			header('Cache-Control: must-revalidate');
-			header('Pragma: public');
-			header('Content-Length: '.strlen($content));
-			echo($content);
-		}
-		public static function upload(){
-			if(!isset($_POST['docnums'])){// num of docs
-				$nums=0;
-			}else{
-				$nums=intval($_POST['docnums']);
-			}
-			if($nums==0){
-				return new Result('---nothingtoupload---');
-			}
-			$error=new Result();
-			$names=array();
-			for($i=0;$i<$nums;++$i){
-				if(!isset($_FILES['doc'.$i])){
-					continue;
-				}
-				if(!isset($_FILES['doc'.$i]['error'])){
-					continue;
-				}
-				if(!isset($_FILES['doc'.$i]['name'])){
-					continue;
-				}
-				if(!isset($_FILES['doc'.$i]['tmp_name'])){
-					continue;
-				}
-				if(is_array($_FILES['doc'.$i]['error'])){
-					foreach($_FILES['doc'.$i]['error'] as $key=>$e){
-						if($e==0){
-							if(!isset($_FILES['doc'.$i]['name'][$key])){
-								continue;
-							}
-							if(!isset($_FILES['doc'.$i]['tmp_name'][$key])){
-								continue;
-							}
-							$f=explode(".", $_FILES['doc']['name'][$key]);
-							$name=strip(substr($f[0], 0, 32));
-							if(isset($f[1])){
-								$name.='.'.strip(substr($f[1], 0, 16));
-							}
-							$tpath=Path::tmpfile();
-							$names[$tpath]=$name;
-							if(Path::mov_up($_FILES['doc'.$i]['tmp_name'][$key], $tpath)){
-								$error->add("---notmoved---");
-							}
-						}else{
-							$error->add("---uploaderror---");
-						}
-					}
-				}else{
-					if($_FILES['doc'.$i]['error']==0){
-						$f=explode(".", $_FILES['doc']['name']);
-						$name=strip(substr($f[0], 0, 32));
-						if(isset($f[1])){
-							$name.='.'.strip(substr($f[1], 0, 16));
-						}
-						$tpath=Path::tmpfile();
-						$names[$tpath]=$name;
-						if(Path::mov_up($_FILES['doc'.$i]['tmp_name'], $tpath)){
-							$error->add("---notmoved---");
-						}
-					}else{
-						$error->add("---uploaderror---");
-					}
-				}
-			}
-			return $names
 		}
 	}
 }

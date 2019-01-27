@@ -1,6 +1,5 @@
 <?php
 namespace LCMS\Core{
-	use \LCMS\MM\Log\Log;
 	class Mutex{
 		public static function set($module, $name){
 			$path=Data::path($module, $name, "mut");
@@ -22,12 +21,6 @@ namespace LCMS\Core{
 			}
 		}
 		public static function delete($module, $name){return(Path::delete(Data::path($module, $name, "mut")));}
-	}
-	class SafetyException extends \Exception{
-		public function __construct($message, $code=0, $previous=null){
-			Pool::trouble();
-			parent::__construct($message, $code, $previous);
-		}
 	}
 }
 ?>

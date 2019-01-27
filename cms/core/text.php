@@ -27,39 +27,5 @@ namespace LCMS\Core{
 			return $text;
 		}
 	}
-	class Localization{
-		
-	}
-	class Code{
-		const STYLE_MONOSPACE=1;
-		public static function deleteCommentLine($line, $comment="//"){
-			$pos=strpos($line, $comment);
-			if($pos!==false){
-				return substr($line, 0, $pos);
-			}
-			return $line;
-		}
-		
-		public static function eol($text){
-			Text::eol();
-			$text=preg_replace("@\r\n *\r\n@sui", "\r\n", $text);
-			return $text;
-		}
-		public static function baseStyle($content, $options=0){
-			$content=str_replace("\r", "\n", $content);
-			$content=explode("\n", $content);
-			$lines=array();
-			foreach($content as $line){
-				$line=trim($line);
-				if(bitmask($options, static::STYLE_MONOSPACE)){
-					$line=preg_replace("@ +@", " ", $line);
-				}
-				if($line!=""){
-					$lines[]=$line;
-				}
-			}
-			return implode("\r\n", $lines);
-		}
-	}
 }
 ?>

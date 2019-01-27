@@ -54,19 +54,45 @@ namespace LCMS\Core{
 		public static function autoload($c){
 			$conf=new Config(Path::cms("stdclass.config"));
 			$line=$conf->get($c);
-			$def=$c;
-			$sim=$c;
 			if($line!=""){
 				$t=explode(' ', $line);
 				if(isset($t[2])){
-					$c=$t[0];
+					$cl=$t[0];
 					$def=$t[1];
 					$iface=$t[2];
-					if(!is_class_of($c, $iface)){
-						#tofo cfg
+					static::loadincp($iface);
+					static::loadincp($cl);
+					if(!is_class_of($cl, $iface)){
+						$cl=$def;
+						static::loadincp($cl);
 					}
+					if(isset($t[3])){
+						if(!is_class_of($cl, $iface)){
+							$cl=$t[3];
+						}
+						static::loadincp($cl);
+					}
+					static::calias($cl, $c);
+				}else{
+					static::loadincp($c);
 				}
+			}else{
+				static::loadincp($c);
 			}
+		}
+		protected static function calias($a, $b){
+			if(class_exists($b)){
+				return false;
+			}else{
+				return class_alias($a, $b);
+			}
+		}
+		protected static function loadincp($c){
+			if(class_exists($c)){
+				return true;
+			}
+			$e=explode("\\", trim($c, "\\"));
+			return static::loadin(static::claspath($c), $e[count($e)-1]);
 		}
 		protected static function classpath($c){
 			$c=strtolower($c);
@@ -74,14 +100,22 @@ namespace LCMS\Core{
 			if($c[0]=="lcms"){
 				if(isset($c[1])){
 					if($c[1]=='core'){
-						return array(Path::cms("core"), Path::cms("exceptions"), Path::cms("interface"));
+						return array(Path::cms("core"), Path::cms("interface"), Path::cms("exceptions"));
 					}
 				}
 			}
 			return array();
 		}
 		protected static function loadin($dir, $c){
-			Path::sinclude(Path::concat($dir, strtolower(strip($c))));
+			if(is_array($dir)){
+				foreach($dir as $d){
+					$r=static::loadin($dir, $c);
+					if($r){
+						return true;
+					}
+				}
+			}
+			return Path::sinclude(Path::concat($dir, strtolower(strip($c))));
 		}
 	}
 }

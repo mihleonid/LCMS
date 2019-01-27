@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	class AllowedTags extends IAllowedTags{
+	class LAllowedTags extends IAllowedTags{
 		public static function getAllowedTags($can=null){
 			#todo auto can
 			if($can){

@@ -2,7 +2,7 @@
 namespace LCMS\Core{
 	use \DOMNode;
 	use \DOMDocument;
-	class TagStripper extends ITagStripper{
+	class LTagStripper extends ITagStripper{
 		public function strip($html){
 			$m=array();
 			if($this->PHP){

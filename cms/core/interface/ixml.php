@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	abstract class ILXML{
+	abstract class IXML{
 		protected $contents="";
 		public function __construct($path, $path=true){
 			if($path){

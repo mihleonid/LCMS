@@ -273,6 +273,13 @@ namespace LCMS\Core{
 		public static function cmsinstall($path){return(static::concat((static::deleteroot(dirname(dirname(dirname( __FILE__ ))))), $path));}
 		public static function sinclude($path){
 			if(static::ufile_exists($path)){
+				static::inc($path);
+				return true;
+			}
+			return false;
+		}
+		public static function rsinclude($path){
+			if(static::ufile_exists($path)){
 				return static::inc($path);
 			}
 			return Pool::CRASH;

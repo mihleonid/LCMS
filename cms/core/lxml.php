@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	class LXML extends ILXML{
+	class LXML extends IXML{
 		public function getNodes($tag, $arg=array()){
 			$m="sui";
 			$tag=preg_quote($tag, "@");

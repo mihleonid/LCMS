@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	class PageLog extends IPageLog{
+	class LPageLog extends IPageLog{
 		public static function put($path, $user, $type, $ok=true){
 			switch($type){
 				case (static::ADD):

@@ -285,6 +285,7 @@ namespace LCMS\Core{
 			return Pool::CRASH;
 		}
 		public static function inc($path){return(include(static::root($path)));}
+		public static function exists($path){return(trim(static::get($path))!="");}
 		//handler:
 		public static function initialize(){
 			static::$droot=rtrim(str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']), "/");

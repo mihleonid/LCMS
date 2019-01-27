@@ -8,3 +8,5 @@ noattr[en]: Attribute not exists
 noattr[ru]: Аттрибута не существует
 empystr[en]: Empty string
 empystr[ru]: Пустой аргумент
+pagenotexists[en]: Page not exists
+pagenotexists[ru]: Страницы не существует

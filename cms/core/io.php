@@ -117,6 +117,7 @@ namespace LCMS\Core{
 			}
 			return Path::put($path, $content);
 		}
+		public static function exists($path, $data=array()){return(trim(static::get($path, $data))!="");}
 	}
 }
 ?>

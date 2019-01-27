@@ -2,16 +2,15 @@
 namespace LCMS\Core{
 	class Page{
 		private static $foot;
-		#region operations
 		public static function delete($path){
 			$path=static::clearPath($path);
-			if(file_exists($_SERVER['DOCUMENT_ROOT'].$path) and is_file($_SERVER['DOCUMENT_ROOT'].$path)){
-				unlink($_SERVER['DOCUMENT_ROOT'].$path);
-				PageLog::action($path, $GLOBALS['AUTH'][0], PageLog::DELETE);
+			if(Path::exists($path)){
+				Path::delete($path);
+				PageLog::put($path, User::authName(), PageLog::DELETE);
 				return new Result();
 			}else{
-				PageLog::action($path, $GLOBALS['AUTH'][0], PageLog::DELETE, false);
-				return new Result("Удаляемая страница не найдена");
+				PageLog::put($path, User::authName(), PageLog::DELETE, false);
+				return new Result("---pagenotexists---");
 			}
 		}
 		public static function deleteDir($path){
@@ -34,8 +33,6 @@ namespace LCMS\Core{
 				return new Result("Удаляемая папка не найдена");
 			}
 		}
-		#endregion
-		#region data
 		public static function clearPath($path, $stat=null, $name=null){
 			if(($stat==null)or($name==null)){
 				$stat=$GLOBALS['AUTH'][2];

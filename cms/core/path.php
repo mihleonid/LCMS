@@ -286,6 +286,7 @@ namespace LCMS\Core{
 		}
 		public static function inc($path){return(include(static::root($path)));}
 		public static function exists($path){return(trim(static::get($path))!="");}
+		public static function web($path){return("/".(static::abs($path));}
 		//handler:
 		public static function initialize(){
 			static::$droot=rtrim(str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']), "/");

@@ -23,7 +23,7 @@ namespace LCMS\Core{
 			}
 			$user=User::realName($user);
 			$type="$path|$user|$type|$ok";
-			Log::llog(Path::cms("page.log"), $type);
+			return Log::llog(Path::cms("page.log"), $type);
 		}
 	}
 }

@@ -1,8 +1,12 @@
 <?php
 namespace LCMS\Core{
 	class LXML extends IXML{
-		public function getNodes($tag, $arg=array()){
-			$m="sui";
+		public function getNodes($tag, $arg=array(), $i){
+			if($i){
+				$m="sui";
+			}else{
+				$m="su";
+			}
 			$tag=preg_quote($tag, "@");
 			if($arg==array()){
 				$i=preg_match("@<$tag>(.*?)</$tag>@$m", $this->contents, $matches);
@@ -29,13 +33,13 @@ namespace LCMS\Core{
 			}
 			$i=preg_match("@<$tag".$s.">(.*?)</$tag>@$m", $this->contents, $matches);
 			if($i==0){
-					return new static("", false);
+				return new static("", false);
 			}
 			return array(new static($matches[1], false));
 		}
 		public function has($tag){return(preg_match("@<".preg_quote($tag, "@")." ?/>@u", $this->contents)!=0);}
 		public function hasopen($tag){return(preg_match("@<".preg_quote($tag, "@").".*?>@u", $this->contents)!=0);}
-		public function node($path){
+		public function node($path, $i=false){
 			$path=explode(".", $path);
 			$current=$this;
 			foreach($path as $el){
@@ -43,7 +47,7 @@ namespace LCMS\Core{
 				if(!isset($el[1])){
 					$el[1]=-1;
 				}
-				$current=$current->getNode($el[0], str2arr($el[1]));
+				$current=$current->getNode($el[0], str2arr($el[1]), $i);
 				$current=$current[0];
 			}
 		}

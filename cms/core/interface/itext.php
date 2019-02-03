@@ -7,6 +7,9 @@ namespace LCMS\Core{
 		const PARSE_PART=4;
 		const PARSE_SPC_PART=8;
 		const PARSE_INSTALLED=16;
+		const PARSE_PLUGIN=32;
+		const PARSE_SPC_ACT=64;//not included in ALL
+		const PARSE_BG=128;
 		const PARSE_PAGE=PARSE_PART|PARSE_SPC_PART|PARSE_INSTALLED;
 		const PARSE_ALL=PARSE_LOCALE|PARSE_ACTION|PARSE_PAGE;
 		abstract public function parse($content, $flags=static::PARSE_ALL, $options=array());

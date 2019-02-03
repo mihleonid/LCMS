@@ -10,3 +10,10 @@ empystr[en]: Empty string
 empystr[ru]: Пустой аргумент
 pagenotexists[en]: Page not exists
 pagenotexists[ru]: Страницы не существует
+nopart[en]: Part not exists
+nopart[ru]: Части не существует
+noclass[en]: Class not exists
+noclass[ru]: Класса не существует
+noprm[en]: No premission
+noprm[ru]: Нет прав
+

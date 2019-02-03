@@ -16,14 +16,17 @@ namespace LCMS\Core{
 		private static function flush($g){
 			Path::put(static::path($g), code(static::$base[$g]));
 		}
-		public static function invoke($g, $data=array()){
+		public static function invoke($g, $data=array(), $seq=false){
 			$g=strip($g);
 			Pool::setCwd();
 			static::load($g);
 			foreach(static::$base[$g] as $func=>$module){
 				if(function_exists($func)){
 					try{
-						@($func($data));
+						$tmp=@($func($data));
+						if($seq){
+							$data=$tmp;
+						}
 					}catch(\Exception $e){
 						Moduler::log($module, "Crash (exc) in invokation function ".$func." with message".($e->getMessage()));
 					}catch(\Throwable $e){
@@ -34,6 +37,9 @@ namespace LCMS\Core{
 		}
 		public static function initialize(){
 			static::invoke("initialize");
+		}
+		public static function parse($text){
+			static::invoke("parse", $text, true);
 		}
 		public static function cleanupSelf(){
 			$files=Path::scan(Path::cms("handlers"));

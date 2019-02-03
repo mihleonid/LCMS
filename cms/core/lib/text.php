@@ -1,5 +1,8 @@
 <?php
 namespace LCMS\Core{
+	function html($str){
+		return(htmlentities($str, ENT_QUOTES|ENT_HTML5, "UTF-8"));
+	}
 	function strip($a, $firstletter=true, $additional=''){
 		$a=preg_replace('@[^a-zA-Z_1-90\-\~'.$additional.']@', '', $a);
 		if($firstletter){

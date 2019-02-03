@@ -53,7 +53,7 @@ namespace LCMS\Core{
 	function bool2str($a){
 		return bool2string($a);
 	}
-	public function str2arr($str){
+	function str2arr($str){
 		if($str==''){
 			return array();
 		}
@@ -69,7 +69,7 @@ namespace LCMS\Core{
 		}
 		return $DATA;
 	}
-	public function arr2str($data){
+	function arr2str($data){
 		if(!is_array($data)){
 			return '';
 		}

@@ -14,10 +14,43 @@ namespace LCMS\Core{
 					$doc=str_replace("<!--!TOHEAD-->", $options['tohead'], $doc);
 				}
 			}
-			if(bitmask($flags, static::PARSE_INSTALLED)){
-				$html=preg_replace_callback('@<!\\-\\-IsInstalled\\(((.*?)(?:, ?(.*?))?)\\)\\-\\->(.*?)<!\\-\\-/IsInstalled\\(\\1\\)\\-\\->@s', "\\LCMS\\Core\\Text::preg_smartHTML_yinstall", $html);
-				$html=preg_replace_callback('@<!\\-\\-NotInstalled\\(((.*?)(?:, ?(.*?))?)\\)\\-\\->(.*?)<!\\-\\-/NotInstalled\\(\\1\\)\\-\\->@s', "\\LCMS\\Core\\Pages\\preg_smartHTML_ninstall", $html);
+			if(bitmask($flags, static::PARSE_PLUGIN)){
+				$html=Handler::parse($html);
 			}
+			if(bitmask($flags, static::PARSE_INSTALLED)){
+				$html=preg_replace_callback('@<!\\-\\-!IsInstalled\\(((.*?)(?:, ?(.*?))?)\\)\\-\\->(.*?)<!\\-\\-/IsInstalled\\(\\1\\)\\-\\->@s', "\\LCMS\\Core\\Text::pyinstall", $html);
+				$html=preg_replace_callback('@<!\\-\\-!NotInstalled\\(((.*?)(?:, ?(.*?))?)\\)\\-\\->(.*?)<!\\-\\-/NotInstalled\\(\\1\\)\\-\\->@s', "\\LCMS\\Core\\Text::pninstall", $html);
+			}
+			if(bitmask($flags, static::PARSE_PART)){
+				$html=preg_replace_callback('@<!\\-\\-!PART_(.*?)\\-\\->@', "\\LCMS\\Core\\Text::ppart", $html);
+				$html=preg_replace_callback('@<!\\-\\-!THE_(.*?)\\-\\->@', "\\LCMS\\Core\\Text::ppart", $html);
+			}
+			if(bitmask($flags, static::PARSE_ACTION)){
+				$html=preg_replace_callback('@<!\\-\\-!ACTION_(.*?)\\-\\->@', "\\LCMS\\Core\\Text::pact", $html);
+			}
+			if(bitmask($flags, static::PARSE_LOCALE)){
+				$html=preg_replace_callback('@\\-\\-\\-(.*?)\\-\\-\\-@', "\\LCMS\\Core\\Text::plocale", $html);
+				$html=preg_replace_callback('@\\+\\+\\+(.*?)\\+\\+\\+@', "\\LCMS\\Core\\Text::plocalew", $html);
+			}
+			if(bitmask($flags, static::PARSE_SPC_ACT)){
+				if(isset($options['a'])){
+					$a=$optins['a'];
+				}else{
+					$a=Pool::CRASH;
+				}
+				$html=str_ireplace('|F|', '|Form||Header|', $html);
+				$html=str_ireplace('|SHeader|', '<'.'?php echo(Form::Sheader()); ?'.'>', $html);
+				$html=str_ireplace('|Header|', '<'.'?php echo(Form::Sheader()); ?'.'>|FH|', $html);
+				$html=str_ireplace('|Form|', '<form action="/cms/action.php" method="POST">', $html);
+				$html=str_ireplace('|FH|', '<input type="hidden" name="tsel" value=$ACTNAME$><input type="hidden" name="page" value=$PAGE$>', $html);
+				$html=str_ireplace('$ACTNAME$', '"'.addslashes($a).'"', $html);
+				$html=str_ireplace('|ACTNAME$', addslashes($a), $html);
+				$html=str_ireplace('|ACTNAME|', $a, $html);
+				$html=str_ireplace('$PAGE$', '"'.addslashes($_SERVER['PHP_SELF']).'"', $html);
+				$html=str_ireplace('|PAGE$', addslashes($_SERVER['PHP_SELF']), $html);
+				$html=str_ireplace('|PAGE|', $_SERVER['PHP_SELF'], $html);
+			}
+			return $html;
 		}
 		public static function eol($text){
 			$text=trim($text);
@@ -26,23 +59,27 @@ namespace LCMS\Core{
 			$text=str_replace("\n", "\r\n", $text);
 			return $text;
 		}
-		static function preg_smartHTML_part($m){
+		private static function ppart($m){
 			$part=strtolower($m[1]);
-			$part=str_replace('.', '', $part);
-			$part=$_SERVER['DOCUMENT_ROOT']."/cms/parts/".$part.".part";
-			if(file_exists($part)){
-				return(file_get_contents($part));
+			if(Part::exists($part)){
+				return(Part::get($part));
 			}else{
-				return("<div style=\"color: red; position: fixed; z-index: 9999999;\"><big><b>Несуществующий элемент: $part</b></big></div>");
+				return("<div style=\"color: red; position: fixed; z-index: 9999999;\"><big><b>---nopart---: $part</b></big></div>");
 			}
 		}
-		static function preg_smartHTML_yinstall($m){
-			return preg_smartHTML_install($m, true);
+		private static function plocale($m){
+			return(ll($m[1]));
 		}
-		static function preg_smartHTML_ninstall($m){
-			return preg_smartHTML_install($m, false);
+		private static function plocalew($m){
+			return("'".str_replace(array('\\', '\''), array('\\\\', '\\\''), static::locale($m))."'");
 		}
-		static function preg_smartHTML_install($m, $val){
+		private static function pyinstall($m){
+			return static::pinstall($m, true);
+		}
+		private static function pninstall($m){
+			return static::pinstall($m, false);
+		}
+		private static function pinstall($m, $val){
 			$a=explode('|', $m[2]);
 			$what=$a[0];
 			switch(strtolower($what)){

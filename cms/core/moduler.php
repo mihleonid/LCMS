@@ -1,6 +1,5 @@
 <?php
 namespace LCMS\Core{
-	use \LCMS\MM\Log\Log;
 	class Moduler{
 		const SIMPLE_LEVEL=0;
 		const STANDART_LEVEL=1;

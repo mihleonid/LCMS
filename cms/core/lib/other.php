@@ -24,5 +24,11 @@ namespace LCMS\Core{
 		}
 		return is_subclass_of($a, $b);
 	}
+	function ll($t){
+		return(Localization::get(trim($t)));
+	}
+	function ee($t){
+		echo(Localization::get(trim($t)));
+	}
 }
 ?>

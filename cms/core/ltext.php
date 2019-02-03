@@ -10,6 +10,12 @@ namespace LCMS\Core{
 				$doc=str_replace("<!--!STYLE-->", "<link rel=\"stylesheet\" href=\"/".Path::cms("getcss.php")."?css=".$pattern."\" type=\"text/css\">", $doc);
 				$doc=str_replace("<!--!STYLES-->", "<link rel=\"stylesheet\" href=\"/".Path::cms("script.php")."?type=css\" type=\"text/css\">", $doc);
 				$doc=str_replace("<!--!SCRIPT-->", "<script src=\"/".Path::cms("script.php")."?type=js\"></script>", $doc);
+				if(isset($options['data'])and(is_array($options['data'])){
+					foreach($options['data'] as $k=>$l){
+						$k=strtoupper($k);
+						$html=str_replace("<!--PAGE_$k-->", $l, $html);
+					}
+				}
 				if(isset($options['tohead'])){
 					$doc=str_replace("<!--!TOHEAD-->", $options['tohead'], $doc);
 				}
@@ -31,6 +37,10 @@ namespace LCMS\Core{
 			if(bitmask($flags, static::PARSE_LOCALE)){
 				$html=preg_replace_callback('@\\-\\-\\-(.*?)\\-\\-\\-@', "\\LCMS\\Core\\Text::plocale", $html);
 				$html=preg_replace_callback('@\\+\\+\\+(.*?)\\+\\+\\+@', "\\LCMS\\Core\\Text::plocalew", $html);
+			}
+			if(bitmask($flags, static::PARSE_BGR)){
+				$html=str_replace("<!--BGR_THEME-->", Path::get(Path::cms("bg/theme.htm")), $html);
+				$html=str_replace("<!--BGR_FONE-->", Path::get(Path::cms("bg/fone.htm")), $html);
 			}
 			if(bitmask($flags, static::PARSE_SPC_ACT)){
 				if(isset($options['a'])){

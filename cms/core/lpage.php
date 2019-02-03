@@ -176,19 +176,5 @@ namespace LCMS\Core{
 			}
 		}
 	}
-	function smartHTML($html, $_DATA=null){
-		$html=str_replace("<!--BGR_THEME-->", file_get_contents($_SERVER['DOCUMENT_ROOT']."/cms/bg/theme.part"), $html);
-		$html=str_replace("<!--BGR_FONE-->", file_get_contents($_SERVER['DOCUMENT_ROOT']."/cms/bg/fone.part"), $html);
-		$html=trim($html);
-		if($_DATA!=null){
-			foreach($_DATA as $k=>$l){
-				$k=strtoupper($k);
-				$html=str_replace("<!--PAGE_$k-->", $l, $html);
-			}
-		}
-		$html=preg_replace_callback('@<!\-\-THE_([a-zA-Z1-90]+)\-\->@', "\\LCMS\\Core\\Pages\\preg_smartHTML_part", $html);
-		$html=preg_replace_callback('@\-\-\-(.*?)\-\-\-@', "\\LCMS\\Core\\Actions\\locale", $html);
-		return $html;
-	}
 }
 ?>

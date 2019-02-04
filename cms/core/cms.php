@@ -29,6 +29,8 @@ namespace LCMS\Core{
 			Handler::test();
 		}
 		*/
+		public static funtion errNo($errno, $errstr, $errfile, $errline){}
+		public static funtion excNo($exc){}
 		public static function errHand($errno, $errstr, $errfile, $errline){
 			Pool::setCwd();
 			Handler::err(array($errno, $errstr, $errfile, $errline));
@@ -40,6 +42,7 @@ namespace LCMS\Core{
 		public static function initialize(){
 			ob_implicit_flush(0);
 			ob_start();
+			spl_autoload_register("\\LCMS\\Core\\CMS::autoload");
 			Pool::initialize();
 			Path::initialize();
 			INI::initialize();
@@ -47,15 +50,15 @@ namespace LCMS\Core{
 			set_error_handler("\\LCMS\\Core\\CMS::errHand");
 			set_exception_handler("\\LCMS\\Core\\CMS::excHand");
 			register_shutdown_function("\\LCMS\\Core\\CMS::extshutdown");
-			spl_autoload_register("\\LCMS\\Core\\CMS::autoload");
 			$content=ob_get_clean();
 			if(strlen($content)!=0){
 				Path::fatal($content);
 			}
-			ob_start();
+			ob_end_clean();
 		}
 		public static function autoload($c){
-			$conf=new Config(Path::cms("stdclass.config"));
+			Pool::setCwd();
+			$conf=new \LCMS\Core\Config(Path::cms("stdclass.config"));
 			$line=$conf->get($c);
 			if($line!=""){
 				$t=explode(' ', $line);
@@ -95,7 +98,7 @@ namespace LCMS\Core{
 				return true;
 			}
 			$e=explode("\\", trim($c, "\\"));
-			return static::loadin(static::claspath($c), $e[count($e)-1]);
+			return static::loadin(static::classpath($c), $e[count($e)-1]);
 		}
 		protected static function classpath($c){
 			$c=strtolower($c);
@@ -112,13 +115,14 @@ namespace LCMS\Core{
 		protected static function loadin($dir, $c){
 			if(is_array($dir)){
 				foreach($dir as $d){
-					$r=static::loadin($dir, $c);
+					$r=static::loadin($d, $c);
 					if($r){
 						return true;
 					}
 				}
+				return false;
 			}
-			return Path::sinclude(Path::concat($dir, strtolower(strip($c))));
+			return Path::sinclude(Path::concat($dir, strtolower(strip($c)).".php"));
 		}
 	}
 }

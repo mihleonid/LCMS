@@ -1,6 +1,6 @@
 <?php
 namespace LCMS\Core{
-	final class Config{
+	class Config{
 		private $cnt="";
 		private $parsed=null;
 		private $p=null;
@@ -21,7 +21,7 @@ namespace LCMS\Core{
 		}
 		private function uparse(){
 			$this->parsed=array();
-			$c=explode("\n", $his->cnt);
+			$c=explode("\n", $this->cnt);
 			foreach($c as $v){
 				$v=Code::deleteCommentLine($v, "#");
 				$v=Code::deleteCommentLine($v);
@@ -46,7 +46,7 @@ namespace LCMS\Core{
 			static::uparse();
 			return $this;
 		}
-		public function write($path=static::PATH){
+		public function write($path=self::PATH){
 			if($path==static::PATH){
 				if($this->p!=null){
 					return IO::set($this->p, trim($this->cnt)."\n");

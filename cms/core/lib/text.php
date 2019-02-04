@@ -26,7 +26,8 @@ namespace LCMS\Core{
 		return (($pos!==false)?(substr_replace($text, $replace, $pos, strlen($search))):($text));
 	}
 	function ob_super_end_flush(){
-		set_error_handler('nop');
+		set_error_handler('\\LCMS\\Core\\CMS::errNo');
+		#todo exception
 		while (@ob_end_flush());
 		restore_error_handler();
 	}

@@ -13,7 +13,7 @@ namespace LCMS\Core{
 		return serialize($a);
 	}
 	function uncode($a, $def=Pool::CRASH){
-		set_error_handler('nop');
+		set_error_handler('\\LCMS\\Core\\CMS::errNo');
 		$b=@unserialize($a);
 		if(($b===false)and($a!=serialize(false))){
 			if($def==Pool::CRASH){

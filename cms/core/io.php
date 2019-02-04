@@ -37,7 +37,7 @@ namespace LCMS\Core{
 				$datan=explode("%%", $datan);
 				$path=$datan[0];
 				$data=array();
-				$tmpcount=count($datan)
+				$tmpcount=count($datan);
 				for($i=1;$i<$tmpcount;++$i){
 					$cur=$datan[$i];
 					$cur=explode('=', $cur);

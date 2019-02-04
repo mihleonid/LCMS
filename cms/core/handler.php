@@ -5,12 +5,12 @@ namespace LCMS\Core{
 		private static function path($g){
 			return(Path::cms("handlers/".strip($g).".db"));
 		}
-		private static function uload(){
+		private static function uload($g){
 			static::$base[$g]=uncode(Path::get(static::path($g)));
 		}
 		private static function load($g){
 			if(!isset(static::$base[$g])){
-				static::uload();
+				static::uload($g);
 			}
 		}
 		private static function flush($g){

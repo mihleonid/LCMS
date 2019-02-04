@@ -18,7 +18,7 @@ namespace LCMS\Core{
 				throw new FileSystemException("It is a dir");
 			}
 			$dir=dirname($path);
-			if(!file_exists($path)){
+			if(!file_exists($dir)){
 				mkdir($dir, 0777, true);
 			}
 			return(file_put_contents($path, $contents)!==false);
@@ -66,8 +66,8 @@ namespace LCMS\Core{
 		}
 		private static function unonregister(){
 			$met=rnd(0, 1000).rnd(0, 1000).rnd(0, 1000);
-			$path1=static::tmp("register".$met.".check");
-			$path2=static::tmp("reGister".$met.".check");
+			$path1=("register".$met.".check");
+			$path2=("reGister".$met.".check");
 			static::udelete($path1);
 			static::udelete($path2);
 			static::uput($path1, "check");
@@ -82,9 +82,21 @@ namespace LCMS\Core{
 			if(static::$nreg==null){
 				static::$nreg=static::unonregister();
 			}
-			return $nreg;
+			return static::$nreg;
 		}
-		private static function ureal($path){
+		private static function nureal($path=""){
+			$path=realpath($path);
+			if($path==false){
+				return false;
+			}else{
+				$path=rtrim(str_replace("\\", "/", $path), "/");
+				if(static::nonregister()){
+					$path=strtolower($path);
+				}
+				return $path;
+			}
+		}
+		private static function ureal($path=""){
 			$path=realpath(static::root($path));
 			if($path==false){
 				return false;
@@ -186,7 +198,7 @@ namespace LCMS\Core{
 		}
 		public static function scan($path){return static::uscan(static::root($path));}
 		public static function get($path){
-			if(static::ufilesize()>static::MAX_FILESIZE){
+			if(static::ufilesize($path)>static::MAX_FILESIZE){
 				if(!Loc::get("agressive", true)){
 					throw new FileSystemException("Too large");
 				}
@@ -208,7 +220,7 @@ namespace LCMS\Core{
 			return static::tmp($prefix.$i.".tmp");
 		}
 		public static function deleteroot($path){
-			$root=static::ureal(static::root());
+			$root=static::ureal();
 			if($root==false){
 				throw new FileSystemException("No root");
 				return false;
@@ -222,7 +234,7 @@ namespace LCMS\Core{
 					$newpath.=$part."/";
 				}else{
 					$tmppath.=$part."/";
-					if(static::ureal($tmppath)==$root){
+					if(static::nureal($tmppath)==$root){
 						$found=true;
 					}
 				}
@@ -286,14 +298,15 @@ namespace LCMS\Core{
 		}
 		public static function inc($path){return(include(static::root($path)));}
 		public static function exists($path){return(trim(static::get($path))!="");}
-		public static function web($path){return("/".(static::abs($path));}
+		public static function web($path){return("/".(static::abs($path)));}
 		//handler:
 		public static function initialize(){
 			static::$droot=rtrim(str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']), "/");
 			return true;
 		}
 		public static function test(){
-			$info
+			//$info
+			//todo notest
 		}
 		public static function shutdown(){
 			if(Pool::getFlushBack()){

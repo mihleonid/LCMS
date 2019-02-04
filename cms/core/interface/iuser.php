@@ -8,6 +8,7 @@ namespace LCMS\Core{
 		abstract public static function authStatus();
 		abstract public static function authHas();
 		abstract public static function sudo($user);
+		abstract public static function status($user);
 		abstract public static function unsudo();
 		abstract public static function isClever($name=null);
 	}

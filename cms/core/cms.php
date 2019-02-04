@@ -3,6 +3,7 @@ namespace LCMS\Core{
 	class CMS{
 		public static function shutdown(){
 			Pool::setCwd();
+			Page::footer();
 			Loc::shutdown();
 			Handler::shutdown();
 			ob_super_end_flush();
@@ -19,6 +20,7 @@ namespace LCMS\Core{
 			Handler::cleanup();
 			Path::cleanup();
 		}
+		/* todo test
 		public static function test(){
 			Pool::setCwd();
 			Path::test();
@@ -26,6 +28,7 @@ namespace LCMS\Core{
 			Handler::testSelf();
 			Handler::test();
 		}
+		*/
 		public static function errHand($errno, $errstr, $errfile, $errline){
 			Pool::setCwd();
 			Handler::err(array($errno, $errstr, $errfile, $errline));

@@ -39,8 +39,8 @@ namespace LCMS\Core{
 				$html=preg_replace_callback('@\\+\\+\\+(.*?)\\+\\+\\+@', "\\LCMS\\Core\\Text::plocalew", $html);
 			}
 			if(bitmask($flags, static::PARSE_BGR)){
-				$html=str_replace("<!--BGR_THEME-->", Path::get(Path::cms("bg/theme.htm")), $html);
-				$html=str_replace("<!--BGR_FONE-->", Path::get(Path::cms("bg/fone.htm")), $html);
+				$html=str_replace("<!--!BGR_THEME-->", Path::get(Path::cms("bg/theme.htm")), $html);
+				$html=str_replace("<!--!BGR_FONE-->", Path::get(Path::cms("bg/fone.htm")), $html);
 			}
 			if(bitmask($flags, static::PARSE_SPC_ACT)){
 				if(isset($options['a'])){

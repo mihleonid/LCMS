@@ -38,6 +38,9 @@ namespace LCMS\Core{
 		public static function initialize(){
 			static::invoke("initialize");
 		}
+		public static function page(){
+			static::invoke("page");
+		}
 		public static function parse($text){
 			static::invoke("parse", $text, true);
 		}

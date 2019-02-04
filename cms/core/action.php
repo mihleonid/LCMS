@@ -110,7 +110,7 @@ namespace LCMS\Core{
 			return "";
 		}
 		public function e(){
-			echo($this->get);
+			echo($this->get());
 		}
 		public function i(){
 			if($this->can){

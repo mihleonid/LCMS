@@ -44,62 +44,51 @@ namespace LCMS\Core{
 			return $clear;
 		}
 		public static function Site($s, $USER, $DATA, $tohead=""){
-			AntiXSS::H();
-			Web::headerEncode();
 			$s=Pattern::getReal($s);
 			if($s!=null){
 				if($USER!=''){
-					if(!Pattern::canUs(Users::GetStat($USER), $s)){
-						$s=Pattern::getDefault();
+					if(User::exists($USER)){
+						if(!Pattern::canUs(User::status($USER), $s)){
+							$s=Pattern::getDefault();
+						}
 					}
 					if($s==null){
 						echo("<!doctype html><html><head></head><body>");
-						Page::$foot="</body></html>";
-						goto theend;
+						static::$foot="</body></html>";
+						return null;
 					}
 				}
-				if(!Pattern::exists($s)){
-					echo("<!doctype html><html><head></head><body>");
-					Page::$foot="</body></html>";
-					goto theend;
+				$doc=Pattern::get($s);
+				$doc=$doc['patt'];
+				$doc=Text::parse($doc, Text::PARSE_ALL, array('data'=>$DATA, 'pattern'=>$s, 'tohead'=>$tohead));
+				$ar=explode("<!--!TEXT-->", $doc);
+				$ar[0]=trim($ar[0]);
+				static::$foot=trim($ar[1]);
+				if(strpos($doc, "<!--!PHP-->")!==false){
+					$doc=explode("<!--!PHP-->", $ar[0]);
+					if($doc[0]!=null){
+						echo(trim($doc[0]));
+					}
+					Handler::page();
+					if(isset($doc[1])){
+						echo(trim($doc[1]));
+					}
 				}else{
-					$doc=Pattern::get($s);
-					$doc=$doc['patt'];
-					$doc=str_replace("<!--STYLE-->", "<link rel=\"stylesheet\" href=\"/cms/getscss.php?css=$s\" type=\"text/css\">", $doc);
-					$doc=str_replace("<!--STYLES-->", "<link rel=\"stylesheet\" href=\"/cms/script.php?type=css\" type=\"text/css\">", $doc);
-					$doc=str_replace("<!--SCRIPT-->", "<script src=\"/cms/script.php?type=js\"></script>", $doc);
-					$doc=str_replace("<!--TOHEAD-->", $tohead, $doc);
-					if(isset($DATA)){
-						$DATA=Page::strtodata($DATA);
-						foreach($DATA as $Dkey=>$Dvalue){
-							$Dkey=preg_replace("@[^a-zA-Z]@", "", $Dkey);
-							$Dvalue=preg_replace("@[^a-zA-Z_а-яА-Яё1-90]@u", "", $Dvalue);
-							$doc=str_replace("<!--PAGE_$Dkey-->", $Dvalue, $doc);
-						}
-					}
-					$_ar=explode("<!--TEXT-->", $doc);
-					$_ar[0]=trim($_ar[0]);
-					Page::$foot=smartHTML($_ar[1]);
-					if(strpos($doc, "<!--PHP-->")!==false){
-						$_SCRIPT_TYPE_FOR_INClude_in_GETSHABL___PHP="php";
-						$doc=explode("<!--PHP-->", $_ar[0]);
-						if($doc[0]!=null){
-							echo(smartHTML($doc[0]));
-						}
-						include_once ($_SERVER['DOCUMENT_ROOT']."/cms/script.php");
-						if(isset($doc[1])){
-							echo(smartHTML($doc[1]));
-						}
-					}else{
-						echo(smartHTML($_ar[0]));
-					}
+					echo(trim($ar[0]));
 				}
 			}else{
 				echo("<!doctype html><html><head></head><body>");
-				Page::$foot="</body></html>";
+				static::$foot="</body></html>";
 			}
-			theend:;
-			register_shutdown_function('\\LCMS\\Core\\Pages\\Page::footer');
+		}
+		protected static function enter(){
+			Path::sinclude(Path::cms("enter.html"));
+			static::footer();
+			exit;
+		}
+		protected static function quit(){
+			Path::sinclude(Path::cms("exit.html"));
+			echo(static::$sd);
 		}
 		public static function CMS($tohead=""){
 			static::sudo();
@@ -113,16 +102,15 @@ namespace LCMS\Core{
 				if(isset($_REQUEST['aj'])){
 					unset($_REQUEST['aj']);
 				}
-				$_SERVER['argv'][0]=preg_replace('@\??aj\=1\&?@', '', $_SERVER['argv'][0]);
+				$_SERVER['argv'][0]=preg_replace('@\\??\\&?aj\\=1@', '', $_SERVER['argv'][0]);
 				if($tohead!=""){
 					echo('<!--tohead-->');
 				}
 				if(User::authHas()){
-					include_once($_SERVER['DOCUMENT_ROOT']."/cms/exit.html");
-					echo(static::$sd);
+					static::uit();
 					return;
 				}else{
-					include_once($_SERVER['DOCUMENT_ROOT']."/cms/enter.html");
+					static::enter();
 					exit;
 				}
 			}
@@ -131,38 +119,48 @@ namespace LCMS\Core{
 				$doc=Pattern::get($s);
 				$doc=$doc['patt'];
 				$doc=Text::parse($doc, Text::PARSE_ALL, array('pattern'=>$s, 'tohead'=>$tohead));
-				$_ar=explode("<!--TEXT-->", $doc);
-				$_ar[0]=trim($_ar[0]);
-				static::$foot=smartHTML($_ar[1]);
-				if(strpos($doc, "<!--PHP-->")!==false){
-					$_SCRIPT_TYPE_FOR_INClude_in_GETSHABL___PHP="php";
-					$doc=explode("<!--PHP-->", $_ar[0]);
-					if($doc[0]!=null){
-						echo(smartHTML($doc[0]));
+				$ar=explode("<!--!TEXT-->", $doc);
+				$ar[0]=trim($ar[0]);
+				static::$foot=trim($ar[1]);
+				if(strpos($ar[0], "<!--!PHP-->")!==false){
+					$doc=explode("<!--!PHP-->", $ar[0]);
+					if($doc[0]!=""){
+						echo($doc[0]);
 					}
-					include_once ($_SERVER['DOCUMENT_ROOT']."/cms/script.php");
-					if($doc[1]!=null){
-						echo(smartHTML($doc[1]));
+					Handler::page();
+					if(isset($doc[1])){
+						echo($doc[1]);
 					}
 				}else{
-					echo(smartHTML($_ar[0]));
+					echo($ar[0]);
 				}
 			}else{
 				echo("<!doctype html><html><head></head><body>");
 				static::$foot="</body></html>";
 			}
-			if($GLOBALS['AUTH']!=false){
-				include_once($_SERVER['DOCUMENT_ROOT']."/cms/exit.html");
-				echo(static::$sd);
+			if(User::authHas()){
+				static::quit();
 			}else{
-				include_once($_SERVER['DOCUMENT_ROOT']."/cms/enter.html");
-				Page::footer();
-				exit;
+				static::enter();
 			}
 			echo('<script src="/cms/ajax.js"></script>');
 		}
 		public static function footer(){
-			echo(static::$foot);
+			if(static::$footer==""){
+				return null;
+			}
+			if(strpos(static:$foot, "<!--!PHP-->")!==false){
+				$doc=explode("<!--!PHP-->", static:$foot);
+				if($doc[0]!=""){
+					echo($doc[0]);
+				}
+				Handler::page();
+				if(isset($doc[1])){
+					echo($doc[1]);
+				}
+			}else{
+				echo(static:$foot);
+			}
 		}
 		private static $sd="";
 		public static function sudo(){

@@ -29,8 +29,8 @@ namespace LCMS\Core{
 			Handler::test();
 		}
 		*/
-		public static funtion errNo($errno, $errstr, $errfile, $errline){}
-		public static funtion excNo($exc){}
+		public static function errNo($errno, $errstr, $errfile, $errline){}
+		public static function excNo($exc){}
 		public static function errHand($errno, $errstr, $errfile, $errline){
 			Pool::setCwd();
 			Handler::err(array($errno, $errstr, $errfile, $errline));
@@ -47,8 +47,9 @@ namespace LCMS\Core{
 			Path::initialize();
 			INI::initialize();
 			Handler::initialize();
-			set_error_handler("\\LCMS\\Core\\CMS::errHand");
-			set_exception_handler("\\LCMS\\Core\\CMS::excHand");
+			//todo decomment
+			//set_error_handler("\\LCMS\\Core\\CMS::errHand");
+			//set_exception_handler("\\LCMS\\Core\\CMS::excHand");
 			register_shutdown_function("\\LCMS\\Core\\CMS::extshutdown");
 			$content=ob_get_clean();
 			if(strlen($content)!=0){
@@ -59,7 +60,7 @@ namespace LCMS\Core{
 		public static function autoload($c){
 			Pool::setCwd();
 			$conf=new \LCMS\Core\Config(Path::cms("stdclass.config"));
-			$line=$conf->get($c);
+			$line=$conf->get("\\".trim($c, "\\"));
 			if($line!=""){
 				$t=explode(' ', $line);
 				if(isset($t[2])){
@@ -106,7 +107,7 @@ namespace LCMS\Core{
 			if($c[0]=="lcms"){
 				if(isset($c[1])){
 					if($c[1]=='core'){
-						return array(Path::cms("core"), Path::cms("interface"), Path::cms("exceptions"));
+						return array(Path::cms("core"), Path::cms("core/interface"), Path::cms("core/exceptions"));
 					}
 				}
 			}

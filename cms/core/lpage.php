@@ -21,7 +21,7 @@ namespace LCMS\Core{
 				PageLog::put($path, User::authName(), PageLog::DELETE);
 			}else{
 				PageLog::put($path, User::authName(), PageLog::DELETE, false);
-				return $new Result("---pagenotexists---");
+				return new Result("---pagenotexists---");
 			}
 		}
 		public static function clearPath($path, $stat=null, $name=null){
@@ -149,8 +149,8 @@ namespace LCMS\Core{
 			if(static::$footer==""){
 				return null;
 			}
-			if(strpos(static:$foot, "<!--!PHP-->")!==false){
-				$doc=explode("<!--!PHP-->", static:$foot);
+			if(strpos(static::$foot, "<!--!PHP-->")!==false){
+				$doc=explode("<!--!PHP-->", static::$foot);
 				if($doc[0]!=""){
 					echo($doc[0]);
 				}
@@ -159,7 +159,7 @@ namespace LCMS\Core{
 					echo($doc[1]);
 				}
 			}else{
-				echo(static:$foot);
+				echo(static::$foot);
 			}
 		}
 		private static $sd="";

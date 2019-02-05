@@ -1,6 +1,9 @@
 <?php
+echo("<style>*{background:#333;color:eee}</style>");
+echo(str_repeat(" ", 999999));
 include(rtrim(str_replace("\\", "/", __DIR__), "/")."/core/include.php");
 \LCMS\Core\Page::CMS();
+echo("O");
 exit;
 if(Users::can("shop")){?>
 <div style="float: right; margin: 5px; margin-right: 8px;">

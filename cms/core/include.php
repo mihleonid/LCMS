@@ -14,4 +14,4 @@ include(__DIR__ ."/config.php");
 include(__DIR__ ."/ini.php");
 include(__DIR__ ."/cms.php");
 LCMS\Core\CMS::initialize();
-?>
+

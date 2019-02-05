@@ -6,7 +6,7 @@ namespace LCMS\Core{
 			return(Path::cms("handlers/".strip($g).".db"));
 		}
 		private static function uload($g){
-			static::$base[$g]=uncode(Path::get(static::path($g)));
+			static::$base[$g]=uncode(Path::get(static::path($g)), array());
 		}
 		private static function load($g){
 			if(!isset(static::$base[$g])){

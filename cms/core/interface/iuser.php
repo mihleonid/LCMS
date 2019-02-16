@@ -2,7 +2,7 @@
 namespace LCMS\Core{
 	abstract class IUser extends GlobalRW{
 		abstract public static function exists($name);
-		abstract public static function can($name, $stat);
+		abstract public static function can($name, $stat=null);
 		abstract public static function realName($name);
 		abstract public static function authName();
 		abstract public static function authStatus();

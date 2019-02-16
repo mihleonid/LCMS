@@ -34,18 +34,22 @@ namespace LCMS\Core{
 				$level=static::leveltostring($line[1]);
 				return(Path::cms($level."/".$line[0]."name"));
 			}else{
-				if(Log::logging()){#todo
-					Log::put("Module ".strip($name)." not exists");#todo
+				if(Log::logging()){
+					Log::put("Module ".strip($name)." not exists");
 				}
 				return(Path::tmp("rubish".rand()));
 			}
 		}
 		public static function log($module, $message){
 			if(Log::logging()){
-				Log::llog(Path::concat(static::path($module), "main.log"), $message);#todo
+				Log::llog(Path::concat(static::path($module), "main.log"), $message);
 			}
 		}
-		public static function#todo install 
+		public static function install($module){
+			if(!Repos::exists($module)){
+				return new Result("---nomodule---");//loc
+			}
+		}
 	}
 }
 ?>

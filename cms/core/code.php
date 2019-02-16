@@ -9,7 +9,18 @@ namespace LCMS\Core{
 			}
 			return $line;
 		}
-		
+		public static function getCommentLine($line, $comment="//"){
+			$pos=strpos($line, $comment);
+			if($pos!==false){
+				return substr($line, $pos);
+			}
+			return $comment;
+		}
+		public static function commentLine($line, $comment="//"){//opt
+			$a=deleteCommentLine($line, $comment);
+			$b=getCommentLine($line, $comment);
+			return array($a, $b);
+		}
 		public static function eol($text){
 			Text::eol();
 			$text=preg_replace("@\r\n *\r\n@sui", "\r\n", $text);
@@ -32,4 +43,4 @@ namespace LCMS\Core{
 		}
 	}
 }
-?>
+

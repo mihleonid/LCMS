@@ -1,5 +1,6 @@
 <?php
 namespace LCMS\Core{
+	//imp INI by Config
 	class INI{
 		private static function path(){
 			return(__DIR__ . "/../php.ini");

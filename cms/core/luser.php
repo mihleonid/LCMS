@@ -4,7 +4,7 @@ namespace LCMS\Core{
 		public static function exists($name){
 			return true;
 		}
-		public static function can($name, $stat){
+		public static function can($name, $stat=null){
 			return true;
 		}
 		public static function realName($name){

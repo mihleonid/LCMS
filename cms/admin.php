@@ -79,4 +79,4 @@ Action::e('add');
 </div>
 <?php
 }
-Page::footer()?>
+\LCMS\Core\CMS::shutdown()?>

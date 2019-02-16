@@ -4,14 +4,26 @@ namespace LCMS\Core{
 		private $cnt="";
 		private $parsed=null;
 		private $p=null;
+		private $cmnt="#";
 		const PATH=1;
-		public function __construct($con, $path=true){
+		public function __construct($con, $path=true, $c="#"){
+			$this->setComment($c);
 			if($path){
 				$this->p=$con;
 				$this->cnt=IO::get($con);
 			}else{
 				$this->cnt=trim((string)$con);
 			}
+		}
+		public function setComment($c){
+			$l=$this->cmnt;
+			$this->cmnt=$c;
+			if($l!=$c){
+				$this->uparse();
+			}
+		}
+		public function getComment(){
+			return $this->cmnt;
 		}
 		private function parse(){
 			if($this->parsed==null){
@@ -23,7 +35,7 @@ namespace LCMS\Core{
 			$this->parsed=array();
 			$c=explode("\n", $this->cnt);
 			foreach($c as $v){
-				$v=Code::deleteCommentLine($v, "#");
+				$v=Code::deleteCommentLine($v, $this->cmnt);
 				$v=Code::deleteCommentLine($v);
 				$v=trim($v);
 				$v=explode("=", $v);
@@ -44,6 +56,45 @@ namespace LCMS\Core{
 		public function set($key, $val){
 			$this->cnt.="\n".strip($key, false, "\\\\")."=".str_replace("\r", "", str_replace($val, "\n", ""));
 			static::uparse();
+			return $this;
+		}
+		/*smrtcleanup
+		public function cleanup(){
+			$cnt="";
+			$lines=array();
+			$c=explode("\n", $this->cnt);
+			foreach($c as $v){
+				$v=trim($v);
+				$v=trim($v, "#");
+				$v=Code::commentLine($v, "#");
+				if(trim($v[0])==""){
+					$lines[]=$v[1];
+				}
+				$c=explode("=", $v[0]);
+				if(!isset($c[1])){
+					$c[1]="1";
+				}
+			}
+		}
+		*/
+		public function cleanup(){
+			$newfile=array();
+			$arr=explode("\n", $this->cnt);
+			foreach($arr as $line){
+				$line=trim($line);
+				if(strpos($line, $this->cmnt)!==false){
+					$newfile[]=$line;
+					continue;
+				}
+				if(strpos($line, "=")==false){
+					continue;
+				}
+				if(!in_array($line, $newfile)){
+					$newfile[]=$line;
+				}
+			}
+			$this->cnt=implode("\n", $newfile);
+			$this->uparse();
 			return $this;
 		}
 		public function write($path=self::PATH){

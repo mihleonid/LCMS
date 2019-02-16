@@ -2,7 +2,9 @@
 namespace LCMS\Core{
 	class LAllowedTags extends IAllowedTags{
 		public static function getAllowedTags($can=null){
-			#todo auto can
+			if($can==null){
+				$can=User::can("html");
+			}
 			if($can){
 				return Loc::get("html");
 			}else{

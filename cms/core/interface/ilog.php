@@ -1,7 +1,7 @@
 <?php
 namespace LCMS\Core{
 	abstract class ILog extends TLogClear{
-		public static function path(){
+		protected static function path(){
 			return Path::cms("main.log");
 		}
 		public static function put($msg){

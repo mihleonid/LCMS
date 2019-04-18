@@ -25,6 +25,7 @@ namespace LCMS\Core{
 	ee($t);	//echo localized t
 
 	function html($str);	//strip html
+	function htmlamp($str);	//strip html ampersand is allowed
 
 	function strip($a, $firstletter=true, $additional='', $isadditionalletter=false);	//convert string to cms-safe
 	function strip_ru($a, $firstletter=false);						//with cyr

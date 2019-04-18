@@ -14,6 +14,7 @@ namespace LCMS\Core{
 		}
 		public static function update(){
 			Localization::update();
+			ELog::update();
 		}
 		public static function cleanup(){
 			Pool::setCwd();
@@ -47,6 +48,7 @@ namespace LCMS\Core{
 			ob_implicit_flush(0);
 			ob_start();
 			spl_autoload_register("\\LCMS\\Core\\CMS::autoload");
+			register_shutdown_function("\\LCMS\\Core\\CMS::extshutdown");
 			Pool::initialize();
 			Path::initialize();
 			INI::initialize();
@@ -54,16 +56,14 @@ namespace LCMS\Core{
 			//todo decomment
 			//set_error_handler("\\LCMS\\Core\\CMS::errHand");
 			//set_exception_handler("\\LCMS\\Core\\CMS::excHand");
-			register_shutdown_function("\\LCMS\\Core\\CMS::extshutdown");
 			$content=ob_get_clean();
 			if(strlen($content)!=0){
 				Path::fatal($content);
 			}
-			ob_end_clean();
 		}
 		public static function autoload($c){
 			Pool::setCwd();
-			$conf=new \LCMS\Core\Config(Path::cms("stdclass.config"));
+			$conf=new \LCMS\Core\Config(Path::cms("config/stdclass.config"));
 			$line=$conf->get("\\".trim($c, "\\"));
 			if($line!=""){
 				$t=explode(' ', $line);
@@ -111,7 +111,7 @@ namespace LCMS\Core{
 			if($c[0]=="lcms"){
 				if(isset($c[1])){
 					if($c[1]=='core'){
-						return array(Path::cms("core"), Path::cms("core/interface"), Path::cms("core/exceptions"), Path::cms("core/oneedit"), Path::cms("core/lmodul"));
+						return array(Path::cms("core"), Path::cms("core/interface"), Path::cms("core/exceptions"), Path::cms("core/oneedit"), Path::cms("core/simple"), Path::cms("core/lmodul"));
 					}
 				}
 			}

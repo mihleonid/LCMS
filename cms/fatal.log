@@ -1,0 +1,87 @@
+[18-Apr-2019 20:42:40 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 101
+[18-Apr-2019 20:42:40 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:43:24 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:43:24 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:44:54 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:44:54 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:45:17 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:45:17 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:45:38 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:45:38 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:46:37 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:46:37 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:46:58 Europe/Moscow] PHP Notice:  Array to string conversion in /var/www/site/public_html/cms/core/cms.php on line 112
+[18-Apr-2019 20:46:58 Europe/Moscow] PHP Notice:  Array to string conversion in /var/www/site/public_html/cms/core/cms.php on line 112
+[18-Apr-2019 20:46:58 Europe/Moscow] PHP Notice:  Array to string conversion in /var/www/site/public_html/cms/core/cms.php on line 112
+[18-Apr-2019 20:46:58 Europe/Moscow] PHP Notice:  Array to string conversion in /var/www/site/public_html/cms/core/cms.php on line 112
+[18-Apr-2019 20:46:58 Europe/Moscow] PHP Notice:  Array to string conversion in /var/www/site/public_html/cms/core/cms.php on line 112
+[18-Apr-2019 20:46:58 Europe/Moscow] PHP Notice:  Array to string conversion in /var/www/site/public_html/cms/core/cms.php on line 112
+[18-Apr-2019 20:46:58 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:46:58 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:47:07 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:47:07 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:47:26 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:47:26 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:48:01 Europe/Moscow] PHP Warning:  Class '\LCMS\Core\SUser' not found in /var/www/site/public_html/cms/core/cms.php on line 98
+[18-Apr-2019 20:48:01 Europe/Moscow] PHP Fatal error:  Uncaught Error: Class 'LCMS\Core\User' not found in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:48:46 Europe/Moscow] PHP Fatal error:  Class LCMS\Core\SUser contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (LCMS\Core\GlobalRW::path) in /var/www/site/public_html/cms/core/simple/suser.php on line 34
+[18-Apr-2019 20:54:44 Europe/Moscow] PHP Fatal error:  Uncaught Error: Call to undefined method LCMS\Core\SUser::auth() in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:55:52 Europe/Moscow] PHP Fatal error:  Uncaught Error: Call to undefined method LCMS\Core\SUser::auth() in /var/www/site/public_html/cms/cmsinclude.php:15
+Stack trace:
+#0 /var/www/site/public_html/cms/action.php(3): include()
+#1 {main}
+  thrown in /var/www/site/public_html/cms/cmsinclude.php on line 15
+[18-Apr-2019 20:56:48 Europe/Moscow] PHP Fatal error:  Uncaught Error: Cannot access  property LCMS\Core\Loc::$base in /var/www/site/public_html/cms/core/main/helpful/based.php:8
+Stack trace:
+#0 /var/www/site/public_html/cms/core/main/helpful/based.php(13): LCMS\Core\Based::load()
+#1 /var/www/site/public_html/cms/core/oneedit/loc.php(11): LCMS\Core\Based::get('antixsslog', true)
+#2 /var/www/site/public_html/cms/core/oneedit/antixss.php(41): LCMS\Core\Loc::get('antixsslog', true)
+#3 /var/www/site/public_html/cms/core/oneedit/antixss.php(50): LCMS\Core\AntiXSS::getA()
+#4 /var/www/site/public_html/cms/core/oneedit/antixss.php(31): LCMS\Core\AntiXSS::hacker()
+#5 /var/www/site/public_html/cms/action.php(17): LCMS\Core\AntiXSS::R()
+#6 {main}
+  thrown in /var/www/site/public_html/cms/core/main/helpful/based.php on line 8

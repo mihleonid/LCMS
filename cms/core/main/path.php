@@ -274,7 +274,9 @@ namespace LCMS\Core{
 			}
 			return $path;
 		}
-		public static function cms($path){return(static::cmsinstall(static::concat("cms", $path)));}
+		public static function cms($path){
+			return(static::cmsinstall(static::concat("cms", $path)));
+		}
 		public static function site($path){
 			$path=static::abs($path);
 			if(static::nonregister()){
@@ -288,7 +290,7 @@ namespace LCMS\Core{
 			return $path;
 		}
 		public static function recovery($path){return(static::cmsinstall(static::concat("recovery", $path)));}
-		public static function cmsinstall($path){return(static::concat((static::deleteroot(dirname(dirname(dirname( __FILE__ ))))), $path));}
+		public static function cmsinstall($path){return(static::concat((static::deleteroot(dirname(dirname(dirname(dirname( __FILE__ )))))), $path));}
 		public static function sinclude($path){
 			if(static::ufile_exists($path)){
 				static::inc($path);
@@ -310,10 +312,12 @@ namespace LCMS\Core{
 			static::$droot=rtrim(str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']), "/");
 			return true;
 		}
+		/*test
 		public static function test(){
 			//$info
 			//todo notest
 		}
+		*/
 		public static function shutdown(){
 			if(Pool::getFlushBack()){
 				foreach(static::$changes as $ch){

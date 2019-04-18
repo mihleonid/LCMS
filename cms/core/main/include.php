@@ -6,4 +6,5 @@ include(__DIR__ ."/io.php");
 include(__DIR__ ."/helpful/include.php");
 include(__DIR__ ."/code.php");
 include(__DIR__ ."/config.php");
+include(__DIR__ ."/handler.php");
 include(__DIR__ ."/ini.php");

@@ -2,7 +2,7 @@
 namespace LCMS\Core{
 	abstract class GlobalRW{
 		abstract protected static function path();
-		public static function all(){
+		protected static function all(){
 			return uncode(Path::get(static::path()), array());
 		}
 		protected static function write($c){

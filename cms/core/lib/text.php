@@ -1,7 +1,11 @@
 <?php
 namespace LCMS\Core{
 	function html($str){
-		return(htmlentities($str, ENT_QUOTES|ENT_HTML5, "UTF-8"));
+		//return(htmlentities($str, ENT_QUOTES|ENT_HTML5, "UTF-8")); low comparability
+		return(htmlentities($str, ENT_QUOTES, "UTF-8"));
+	}
+	function htmlamp($str){
+		return str_replace("&amp;", "&", html($str));
 	}
 	function strip($a, $firstletter=true, $additional='', $isadditionalletter=false){
 		$a=preg_replace('@[^a-zA-Z_1-90\-\~'.$additional.']@', '', $a);

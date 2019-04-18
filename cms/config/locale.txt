@@ -8,6 +8,8 @@ noattr[en]: Attribute not exists
 noattr[ru]: Аттрибута не существует
 empystr[en]: Empty string
 empystr[ru]: Пустой аргумент
+actnotexists[en]: Action not exists
+actnotexists[ru]: Действия не существует
 pagenotexists[en]: Page not exists
 pagenotexists[ru]: Страницы не существует
 nopart[en]: Part not exists
@@ -16,3 +18,10 @@ noclass[en]: Class not exists
 noclass[ru]: Класса не существует
 noprm[en]: No premission
 noprm[ru]: Нет прав
+error[en]: Error
+error[ru]: Ошибка
+secerror[en]: Security error!
+secerror[ru]: Ошибка безопасности!
+tmpfiledeleted[en]: Temporary file was deleted!
+tmpfiledeleted[ru]: Временный файл был удалён!
+

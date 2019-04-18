@@ -3,10 +3,10 @@ namespace LCMS\Core{
 	function html($str){
 		return(htmlentities($str, ENT_QUOTES|ENT_HTML5, "UTF-8"));
 	}
-	function strip($a, $firstletter=true, $additional=''){
+	function strip($a, $firstletter=true, $additional='', $isadditionalletter=false){
 		$a=preg_replace('@[^a-zA-Z_1-90\-\~'.$additional.']@', '', $a);
 		if($firstletter){
-			while(!firstlettercondition($a[0])){
+			while((!firstlettercondition($a[0]))||((strpos($additional, $a[0])!==false)&&(!$isadditionalletter))){
 				$a=substr($a, 1);
 			}
 		}
@@ -21,7 +21,7 @@ namespace LCMS\Core{
 		}
 		return $a;
 	}
-	function str_replace_once($search, $replace, $text) {
+	function str_replace_once($search, $replace, $text){
 		$pos = strpos($text, $search);
 		return (($pos!==false)?(substr_replace($text, $replace, $pos, strlen($search))):($text));
 	}
@@ -74,4 +74,4 @@ namespace LCMS\Core{
 		return true;
 	}
 }
-?>
+

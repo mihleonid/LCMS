@@ -28,7 +28,7 @@ namespace LCMS\Core{
 		return(Localization::get(trim($t)));
 	}
 	function ee($t){
-		echo(Localization::get(trim($t)));
+		echo(ll($t));
 	}
 }
-?>
+

@@ -1,5 +1,0 @@
-LCMS\MM\Users\Clever\setClever
-LCMS\MM\Users\Clever\addClever
-LCMS\MM\Users\Clever\deleteClever
-LCMS\MM\Users\Clever\replaceClever
-LCMS\MM\Users\Clever\isClever

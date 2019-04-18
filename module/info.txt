@@ -1,9 +1,0 @@
-Version: 1.0
-Name[ru]: Имя
-Name[en]: Name
-Description[ru]: Описание
-Description[en]: Description
-Author: Name
-Pages: 1
-Dependencies: core 1.0, |mainmodules| 1.0
-#see 'dependencies format'

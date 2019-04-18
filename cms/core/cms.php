@@ -12,12 +12,16 @@ namespace LCMS\Core{
 		public static function extshutdown(){
 			Path::shutdown();
 		}
+		public static function update(){
+			Localization::update();
+		}
 		public static function cleanup(){
 			Pool::setCwd();
 			Path::cleanup();
 			INI::cleanup();
 			Handler::cleanupSelf();
 			Handler::cleanup();
+			Localization::cleanup();
 			Path::cleanup();
 		}
 		/* todo test
@@ -107,7 +111,7 @@ namespace LCMS\Core{
 			if($c[0]=="lcms"){
 				if(isset($c[1])){
 					if($c[1]=='core'){
-						return array(Path::cms("core"), Path::cms("core/interface"), Path::cms("core/exceptions"));
+						return array(Path::cms("core"), Path::cms("core/interface"), Path::cms("core/exceptions"), Path::cms("core/oneedit"), Path::cms("core/lmodul"));
 					}
 				}
 			}

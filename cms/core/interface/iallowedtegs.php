@@ -1,13 +1,13 @@
 <?php
 namespace LCMS\Core{
 	abstract class IAllowedTags{
-		abstract public function getAllowedTags($can=null);
-		abstract public function addHTag($tag);
-		abstract public function addHAttr($tag, $attr);
-		abstract public function deleteH($path);
-		abstract public function addTag($tag);
-		abstract public function addAttr($tag, $attr);
-		abstract public function delete($path);
+		abstract public static function getAllowedTags($can=null);
+		abstract public static function addHTag($tag);
+		abstract public static function addHAttr($tag, $attr);
+		abstract public static function deleteH($path);
+		abstract public static function addTag($tag);
+		abstract public static function addAttr($tag, $attr);
+		abstract public static function delete($path);
 	}
 }
 ?>

@@ -120,4 +120,3 @@ namespace LCMS\Core{
 		public static function exists($path, $data=array()){return(trim(static::get($path, $data))!="");}
 	}
 }
-?>

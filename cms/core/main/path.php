@@ -339,4 +339,3 @@ namespace LCMS\Core{
 		}
 	}
 }
-?>

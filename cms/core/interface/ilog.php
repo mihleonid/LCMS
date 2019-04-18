@@ -11,4 +11,3 @@ namespace LCMS\Core{
 		abstract public static function llog($path, $msg);
 	}
 }
-?>

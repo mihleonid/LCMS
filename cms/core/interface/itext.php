@@ -16,4 +16,3 @@ namespace LCMS\Core{
 		abstract public function eol($text);
 	}
 }
-

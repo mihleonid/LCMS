@@ -13,4 +13,3 @@ namespace LCMS\Core{
 		abstract public static function isClever($name=null);
 	}
 }
-

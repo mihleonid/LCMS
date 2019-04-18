@@ -9,4 +9,3 @@ namespace LCMS\Core{
 		abstract public static function realName($name);
 	}
 }
-?>

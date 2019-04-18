@@ -7,4 +7,3 @@ include(__DIR__ ."/helpful/include.php");
 include(__DIR__ ."/code.php");
 include(__DIR__ ."/config.php");
 include(__DIR__ ."/ini.php");
-

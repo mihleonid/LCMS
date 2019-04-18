@@ -31,4 +31,3 @@ namespace LCMS\Core{
 		echo(ll($t));
 	}
 }
-

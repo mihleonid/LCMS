@@ -7,4 +7,3 @@ namespace LCMS\Core{
 		abstract public static function canUs($status, $pattern);
 	}
 }
-?>

@@ -38,4 +38,3 @@ namespace LCMS\Core{
 		}
 	}
 }
-

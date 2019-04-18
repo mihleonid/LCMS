@@ -10,4 +10,3 @@ namespace LCMS\Core{
 		abstract public static function delete($path);
 	}
 }
-?>

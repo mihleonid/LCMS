@@ -74,4 +74,3 @@ namespace LCMS\Core{
 		return true;
 	}
 }
-

@@ -5,4 +5,3 @@ namespace LCMS\Core{
 			return Path::cms("status.db");
 	}
 }
-

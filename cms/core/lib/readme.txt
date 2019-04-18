@@ -34,4 +34,3 @@ namespace LCMS\Core{
 
 	function ob_super_end_flush();	//all buffers
 }
-

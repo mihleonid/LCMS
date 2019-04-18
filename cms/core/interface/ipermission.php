@@ -4,4 +4,3 @@ namespace LCMS\Core{
 		
 	}
 }
-?>

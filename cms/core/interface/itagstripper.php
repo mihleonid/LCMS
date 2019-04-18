@@ -36,4 +36,3 @@ namespace LCMS\Core{
 		abstract public function strip($text);
 	}
 }
-?>

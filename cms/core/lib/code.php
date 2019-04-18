@@ -29,4 +29,3 @@ namespace LCMS\Core{
 		return(($mask&$bitint)==$bitint);
 	}
 }
-

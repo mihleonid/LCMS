@@ -82,4 +82,3 @@ namespace LCMS\Core{
 		return ltrim($str, '|');
 	}
 }
-

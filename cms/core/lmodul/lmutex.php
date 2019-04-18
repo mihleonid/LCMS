@@ -24,4 +24,3 @@ namespace LCMS\Core{
 		public static function delete($module, $name){return(Path::delete(Data::path($module, $name, "mut")));}
 	}
 }
-

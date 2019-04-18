@@ -32,4 +32,3 @@ namespace LCMS\Core{
 		abstract public function getNodes($path);
 	}
 }
-?>

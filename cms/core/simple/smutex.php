@@ -20,4 +20,3 @@ namespace LCMS\Core{
 		public static function delete($module, $name){return(Path::delete(Path::tmp($module."ll".$name)));}
 	}
 }
-

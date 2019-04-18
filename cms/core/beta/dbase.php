@@ -94,4 +94,3 @@ namespace LCMS\Core{
 		}
 	}
 }
-?>

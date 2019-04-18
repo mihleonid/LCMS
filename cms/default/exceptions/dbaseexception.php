@@ -7,4 +7,3 @@ namespace LCMS\Core{
 		}
 	}
 }
-?>

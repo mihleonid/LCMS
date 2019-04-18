@@ -16,4 +16,3 @@ noclass[en]: Class not exists
 noclass[ru]: Класса не существует
 noprm[en]: No premission
 noprm[ru]: Нет прав
-

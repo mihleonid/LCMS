@@ -8,4 +8,3 @@ include(__DIR__ ."/exceptions/filesystemexception.php");
 include(__DIR__ ."/main/include.php");
 include(__DIR__ ."/cms.php");
 LCMS\Core\CMS::initialize();
-
